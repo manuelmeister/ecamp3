@@ -8,6 +8,8 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\InputFilter;
 use App\Repository\CampRepository;
+use App\Entity\Period;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -128,6 +130,12 @@ class Camp extends BaseEntity implements BelongsToCampInterface {
     #[ApiProperty(writableLink: true)]
     private ?User $owner;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Period", mappedBy="camp", orphanRemoval=true)
+     * @ORM\OrderBy({"start": "ASC"})
+     */
+    protected Collection $periods;
+
     public function getName(): ?string {
         return $this->name;
     }
@@ -216,6 +224,20 @@ class Camp extends BaseEntity implements BelongsToCampInterface {
         $this->campPrototypeId = $campPrototypeId;
 
         return $this;
+    }
+
+    public function getPeriods(): Collection {
+        return $this->periods;
+    }
+
+    public function addPeriod(Period $period): void {
+        $period->setCamp($this);
+        $this->periods->add($period);
+    }
+
+    public function removePeriod(Period $period): void {
+        $period->setCamp(null);
+        $this->periods->removeElement($period);
     }
 
     public function getCreator(): ?User {
