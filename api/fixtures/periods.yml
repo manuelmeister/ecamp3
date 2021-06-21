@@ -1,0 +1,6 @@
+App\Entity\Period:
+  period1:
+    description: <sentence()>
+    start: <dateTime()>
+    end: <dateTime()>
+    camp: '@camp1'

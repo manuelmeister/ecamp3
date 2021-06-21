@@ -8,7 +8,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\InputFilter;
 use App\Repository\CampRepository;
-use App\Entity\Period;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -131,10 +131,15 @@ class Camp extends BaseEntity implements BelongsToCampInterface {
     private ?User $owner;
 
     /**
-     * @ORM\OneToMany(targetEntity="Period", mappedBy="camp", orphanRemoval=true)
-     * @ORM\OrderBy({"start": "ASC"})
+     * @ORM\OneToMany(targetEntity=Period::class, mappedBy="camp", orphanRemoval=true)
      */
-    protected Collection $periods;
+    #[ApiProperty]
+    private Collection $periods;
+
+    public function __construct()
+    {
+        $this->periods = new ArrayCollection();
+    }
 
     public function getName(): ?string {
         return $this->name;
@@ -226,20 +231,6 @@ class Camp extends BaseEntity implements BelongsToCampInterface {
         return $this;
     }
 
-    public function getPeriods(): Collection {
-        return $this->periods;
-    }
-
-    public function addPeriod(Period $period): void {
-        $period->setCamp($this);
-        $this->periods->add($period);
-    }
-
-    public function removePeriod(Period $period): void {
-        $period->setCamp(null);
-        $this->periods->removeElement($period);
-    }
-
     public function getCreator(): ?User {
         return $this->creator;
     }
@@ -261,6 +252,36 @@ class Camp extends BaseEntity implements BelongsToCampInterface {
     }
 
     public function getCamp(): ?Camp {
+        return $this;
+    }
+
+    /**
+     * @return Period[]
+     */
+    public function getPeriods(): array
+    {
+        return $this->periods->getValues();
+    }
+
+    public function addPeriod(Period $period): self
+    {
+        if (!$this->periods->contains($period)) {
+            $this->periods[] = $period;
+            $period->setCamp($this);
+        }
+
+        return $this;
+    }
+
+    public function removePeriod(Period $period): self
+    {
+        if ($this->periods->removeElement($period)) {
+            // set the owning side to null (unless already changed)
+            if ($period->getCamp() === $this) {
+                $period->setCamp(null);
+            }
+        }
+
         return $this;
     }
 }
