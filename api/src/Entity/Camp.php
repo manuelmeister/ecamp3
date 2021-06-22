@@ -133,12 +133,16 @@ class Camp extends BaseEntity implements BelongsToCampInterface {
     /**
      * @ORM\OneToMany(targetEntity=Period::class, mappedBy="camp", orphanRemoval=true)
      */
-    #[ApiProperty]
-    private Collection $periods;
+    private $periods;
 
-    public function __construct()
-    {
+    /**
+     * @ORM\OneToMany(targetEntity=Activity::class, mappedBy="camp", orphanRemoval=true)
+     */
+    private $activities;
+
+    public function __construct() {
         $this->periods = new ArrayCollection();
+        $this->activities = new ArrayCollection();
     }
 
     public function getName(): ?string {
@@ -256,15 +260,13 @@ class Camp extends BaseEntity implements BelongsToCampInterface {
     }
 
     /**
-     * @return Period[]
+     * @return Collection|Period[]
      */
-    public function getPeriods(): array
-    {
-        return $this->periods->getValues();
+    public function getPeriods(): Collection {
+        return $this->periods;
     }
 
-    public function addPeriod(Period $period): self
-    {
+    public function addPeriod(Period $period): self {
         if (!$this->periods->contains($period)) {
             $this->periods[] = $period;
             $period->setCamp($this);
@@ -273,12 +275,38 @@ class Camp extends BaseEntity implements BelongsToCampInterface {
         return $this;
     }
 
-    public function removePeriod(Period $period): self
-    {
+    public function removePeriod(Period $period): self {
         if ($this->periods->removeElement($period)) {
             // set the owning side to null (unless already changed)
             if ($period->getCamp() === $this) {
                 $period->setCamp(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Activity[]|Collection
+     */
+    public function getActivities(): Collection {
+        return $this->activities;
+    }
+
+    public function addActivity(Activity $activity): self {
+        if (!$this->activities->contains($activity)) {
+            $this->activities[] = $activity;
+            $activity->setCamp($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActivity(Activity $activity): self {
+        if ($this->activities->removeElement($activity)) {
+            // set the owning side to null (unless already changed)
+            if ($activity->getCamp() === $this) {
+                $activity->setCamp(null);
             }
         }
 
