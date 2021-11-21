@@ -42,23 +42,3 @@ export default {
   }),
 }
 </script>
-
-<style lang="scss">
-@media print {
-  @page picasso {
-    /* changing page orientation currently not working in pagedJS/chrome
-       https://github.com/pagedjs/pagedjs/issues/6 */
-    size: a4 landscape;
-    margin: 15mm 15mm;
-
-    @top-center {
-      content: 'Picasso';
-    }
-  }
-
-  .picasso {
-    page-break-after: always;
-    page: picasso;
-  }
-}
-</style>

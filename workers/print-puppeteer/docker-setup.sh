@@ -1,6 +1,4 @@
 #!/bin/bash
-set -euo pipefail
-
-npm ci
+npm i
 
 npm run print

@@ -1,6 +1,6 @@
-window.PagedConfig = {
-  auto: true,
-}
+// window.PagedConfig = {
+//   auto: true,
+// }
 
 /*
 setTimeout(async () => {

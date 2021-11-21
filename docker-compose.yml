@@ -124,6 +124,25 @@ services:
     env_file:
       - ./print/print.env
 
+  browserless:
+    image: browserless/chrome:latest
+    environment:
+      - DEBUG=browserless:*
+      - MAX_CONCURRENT_SESSIONS=10
+      - CONNECTION_TIMEOUT=60000
+      - MAX_QUEUE_LENGTH=20
+      - PREBOOT_CHROME=true
+      - DEMO_MODE=false
+      - HOST=localhost
+      - ENABLE_DEBUGGER=false
+      - TOKEN=gugus
+      - PORT=3005
+      - WORKSPACE_DELETE_EXPIRED=true
+    container_name: "browserless"
+    restart: always
+    ports:
+      - "3005:3005"
+
   composer:
     image: composer:2@sha256:ad6386576ec6f11b8fd1e9f9ea9b375c21ddf3cc941be94d1dd41063f43166f7
     container_name: 'ecamp3-composer'
@@ -177,18 +196,20 @@ services:
 #    ports:
 #      - '3004:15672'
 #
-#  worker-print-puppeteer:
-#    build: ./workers/print-puppeteer
-#    container_name: 'ecamp3-worker-print-puppeteer'
-#    user: ${USER_ID:-1000}
-#    volumes:
-#      - ./workers/print-puppeteer:/app:delegated
-#      - ./.cache/npm:/home/node/.npm
-#      - ./.print-data:/app/data
-#    command: ./docker-setup.sh
-#    environment:
-#      - NPM_CONFIG_UPDATE_NOTIFIER=false
-#      - NPM_CONFIG_CACHE=/home/node/.npm
+  worker-print-puppeteer:
+    build: ./workers/print-puppeteer
+    container_name: 'ecamp3-worker-print-puppeteer'
+    user: ${USER_ID:-1000}
+    volumes:
+      - ./workers/print-puppeteer:/app:delegated
+      - ./.cache/npm:/home/node/.npm
+      - ./.print-data:/app/data
+    ports:
+      - '3010:3010'
+    command: ./docker-setup.sh
+    environment:
+      - NPM_CONFIG_UPDATE_NOTIFIER=false
+      - NPM_CONFIG_CACHE=/home/node/.npm
 #
 #  worker-print-weasy:
 #    build: ./workers/print-weasy

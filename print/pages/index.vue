@@ -1,24 +1,17 @@
 <template>
-  <v-row no-gutters>
-    <v-col cols="12">
-      <div v-if="true">
-        <front-page v-if="config.showFrontpage" :camp="camp" />
-      </div>
+  <div>
+    <div>
+      <h1>GUGUsusudasldkjflk jkaldsjfkladsj lsjfaksjd lkfjsdlfjk as</h1>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci at aut
+      cupiditate dignissimos distinctio, dolor eius expedita hic ipsam molestiae
+      perspiciatis praesentium ratione rerum sed sit sunt unde veniam
+      voluptates.
+    </div>
 
-      <toc v-if="config.showToc" :activities="activities" />
-
-      <picasso v-if="config.showPicasso" :camp="camp" />
-
-      <storyline v-if="config.showStoryline" :camp="camp" />
-
-      <program
-        v-if="config.showDailySummary || config.showActivities"
-        :camp="camp"
-        :show-daily-summary="config.showDailySummary"
-        :show-activities="config.showActivities"
-      />
-    </v-col>
-  </v-row>
+    <div class="blubi">
+      <picasso :camp="camp" />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -49,8 +42,28 @@ export default {
         query.showActivities && query.showActivities.toLowerCase() === 'true',
     }
 
-    this.camp = await this.$api.get().camps({ campId: query.camp })._meta.load
+    await this.$api
+      .post('/authentication_token', {
+        username: 'test-user',
+        password: 'test',
+      })
+      // eslint-disable-next-line no-console
+      .then(() => console.log('succ'))
+
+    this.camp = await this.$api.get().camps({ id: query.camp })._meta.load
     this.activities = (await this.camp.activities()._meta.load).items
   },
 }
 </script>
+
+<style>
+@page picassopage {
+  size: a4 landscape !important;
+  margin: 2cm;
+}
+
+.blubi {
+  page: picassopage;
+  break-inside: avoid;
+}
+</style>
