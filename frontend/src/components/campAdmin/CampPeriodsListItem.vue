@@ -39,7 +39,7 @@ Displays a single period as a list item including controls to edit and delete it
                 {{ $tc('components.camp.campPeriodsListItem.lastPeriodNotDeletable') }}
               </div>
               <div v-else>
-                {{ $tc('components.camp.campPeriodsListItem.deleteWarning') }} <br>
+                {{ $tc('components.camp.campPeriodsListItem.deleteWarning') }} <br />
                 <ul>
                   <li>
                     {{ period.description }}
@@ -55,7 +55,6 @@ Displays a single period as a list item including controls to edit and delete it
 </template>
 
 <script>
-
 import DialogPeriodEdit from './DialogPeriodEdit.vue'
 import DialogEntityDelete from '@/components/dialog/DialogEntityDelete.vue'
 import ButtonEdit from '@/components/buttons/ButtonEdit.vue'
@@ -66,15 +65,14 @@ export default {
   components: { DialogEntityDelete, DialogPeriodEdit, ButtonEdit, ButtonDelete },
   props: {
     period: { type: Object, required: true },
-    disabled: { type: Boolean, default: false }
+    disabled: { type: Boolean, default: false },
   },
   computed: {
-    isLastPeriod () {
+    isLastPeriod() {
       return this.period.camp().periods().items.length === 1
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

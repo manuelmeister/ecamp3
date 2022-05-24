@@ -13,11 +13,13 @@ Displays periods of a single camp.
           v-for="item in periods.items"
           :key="item._meta.self"
           :to="periodRoute(item)"
-          two-line>
+          two-line
+        >
           <v-list-item-content>
             <v-list-item-title>{{ item.description }}</v-list-item-title>
             <v-list-item-subtitle>
-              {{ $date.utc(item.start).format($tc('global.datetime.dateShort')) }} - {{ $date.utc(item.end).format($tc('global.datetime.dateShort')) }}
+              {{ $date.utc(item.start).format($tc('global.datetime.dateShort')) }} -
+              {{ $date.utc(item.end).format($tc('global.datetime.dateShort')) }}
             </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
@@ -36,24 +38,24 @@ export default {
   props: {
     show: { type: Boolean, required: false, default: true },
     camp: { type: Function, required: true },
-    period: { type: Function, required: true }
+    period: { type: Function, required: true },
   },
-  data () {
+  data() {
     return {
       editing: false,
-      messages: []
+      messages: [],
     }
   },
   computed: {
-    periods () {
+    periods() {
       return this.camp().periods()
     },
-    activities () {
+    activities() {
       return this.camp().activities()
-    }
+    },
   },
   methods: {
-    periodRoute
-  }
+    periodRoute,
+  },
 }
 </script>

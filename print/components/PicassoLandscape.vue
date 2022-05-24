@@ -24,8 +24,7 @@
           >
             <template #event="{ event }">
               <div class="font-weight-medium mb-1">
-                ({{ event.number }})&nbsp;
-                {{ event.activity().category().short }}:&nbsp;
+                ({{ event.number }})&nbsp; {{ event.activity().category().short }}:&nbsp;
                 {{ event.activity().title }}
               </div>
               <span>[smiley, forte]</span>

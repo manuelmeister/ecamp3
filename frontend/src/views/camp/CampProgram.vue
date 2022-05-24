@@ -9,13 +9,12 @@ Show all activity schedule entries of a single period.
 
       <v-tooltip :disabled="isContributor" bottom>
         <template #activator="{ on, attrs }">
-          <div
-            v-bind="attrs"
-            v-on="on">
+          <div v-bind="attrs" v-on="on">
             <e-switch
               v-model="editMode"
               :disabled="!isContributor"
-              :label="$tc('views.camp.picasso.editMode')" />
+              :label="$tc('views.camp.picasso.editMode')"
+            />
           </div>
         </template>
         <span>{{ $tc('views.camp.picasso.guestsCannotEdit') }}</span>
@@ -38,7 +37,8 @@ Show all activity schedule entries of a single period.
             :start="Date.parse(period().start)"
             :end="Date.parse(period().end)"
             :editable="editMode"
-            @newEntry="slotProps.on.newEntry" />
+            @newEntry="slotProps.on.newEntry"
+          />
         </template>
       </template>
     </schedule-entries>
@@ -61,25 +61,25 @@ export default {
     PeriodSwitcher,
     ContentCard,
     Picasso,
-    ScheduleEntries
+    ScheduleEntries,
   },
   mixins: [campRoleMixin],
   props: {
-    period: { type: Function, required: true }
+    period: { type: Function, required: true },
   },
-  data () {
+  data() {
     return {
       editMode: false,
-      isPrinting: false
+      isPrinting: false,
     }
   },
   computed: {
-    camp () {
+    camp() {
       return this.period().camp()
-    }
+    },
   },
   methods: {
-    printConfig () {
+    printConfig() {
       return {
         camp: this.period().camp()._meta.self,
         language: this.$store.state.lang.language,
@@ -88,15 +88,13 @@ export default {
           {
             type: 'Picasso',
             options: {
-              periods: [
-                this.period()._meta.self
-              ],
-              orientation: 'L'
-            }
-          }
-        ]
+              periods: [this.period()._meta.self],
+              orientation: 'L',
+            },
+          },
+        ],
       }
-    }
-  }
+    },
+  },
 }
 </script>
