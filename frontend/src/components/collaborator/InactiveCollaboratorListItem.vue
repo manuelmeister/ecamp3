@@ -26,7 +26,8 @@
         <template #activator="{ on }">
           <button-delete :disabled="disabled" v-on="on" />
         </template>
-        {{ $tc('components.camp.inactiveCampCollaboratorListItem.delete') }} <br />
+        {{ $tc('components.camp.inactiveCampCollaboratorListItem.delete') }}
+        <br />
         <ul>
           <li>
             <span v-if="collaborator.user">

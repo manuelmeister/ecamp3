@@ -27,7 +27,8 @@
               <template #activator="{ on }">
                 <button-delete v-on="on" />
               </template>
-              {{ $tc('components.camp.campMaterialListsItem.deleteWarning') }} <br />
+              {{ $tc('components.camp.campMaterialListsItem.deleteWarning') }}
+              <br />
               <ul>
                 <li>
                   {{ materialList.name }}
@@ -49,7 +50,12 @@ import ButtonDelete from '@/components/buttons/ButtonDelete.vue'
 
 export default {
   name: 'CampMaterialListsItem',
-  components: { DialogEntityDelete, DialogMaterialListEdit, ButtonEdit, ButtonDelete },
+  components: {
+    DialogEntityDelete,
+    DialogMaterialListEdit,
+    ButtonEdit,
+    ButtonDelete,
+  },
   props: {
     materialList: { type: Object, required: true },
     disabled: { type: Boolean, default: false },

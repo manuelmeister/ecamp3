@@ -1,6 +1,8 @@
 <template>
   <auth-container>
-    <h1 class="display-1 text-center">{{ $tc('views.auth.register.title') }}</h1>
+    <h1 class="display-1 text-center">
+      {{ $tc('views.auth.register.title') }}
+    </h1>
     <v-form @submit.prevent="register">
       <e-text-field
         v-model="username"

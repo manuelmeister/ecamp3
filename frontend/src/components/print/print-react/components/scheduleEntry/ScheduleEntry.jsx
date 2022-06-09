@@ -51,7 +51,12 @@ function ScheduleEntry(props) {
             {activity.category().short}
           </Text>
           <Text
-            style={{ ...styles.h1, padding: '4pt', flexGrow: '1', overflow: 'ellipsis' }}
+            style={{
+              ...styles.h1,
+              padding: '4pt',
+              flexGrow: '1',
+              overflow: 'ellipsis',
+            }}
           >
             {activity.title}
           </Text>

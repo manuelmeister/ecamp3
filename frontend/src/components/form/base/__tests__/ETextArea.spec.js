@@ -32,7 +32,11 @@ describe('An ETextArea', () => {
       data: () => ({ data: null }),
       template: template,
     })
-    return mountComponent(app, { vuetify, attachTo: document.body, ...options })
+    return mountComponent(app, {
+      vuetify,
+      attachTo: document.body,
+      ...options,
+    })
   }
   beforeEach(() => {
     vuetify = new Vuetify()

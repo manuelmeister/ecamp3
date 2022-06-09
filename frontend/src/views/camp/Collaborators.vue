@@ -73,7 +73,10 @@ Displays collaborators of a single camp.
                       key: 'manager',
                       translation: $tc('entity.camp.collaborators.manager'),
                     },
-                    { key: 'guest', translation: $tc('entity.camp.collaborators.guest') },
+                    {
+                      key: 'guest',
+                      translation: $tc('entity.camp.collaborators.guest'),
+                    },
                   ]"
                   item-value="key"
                   item-text="translation"

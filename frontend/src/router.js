@@ -330,7 +330,10 @@ function requireAuth(to, from, next) {
   if (isLoggedIn()) {
     next()
   } else {
-    next({ name: 'login', query: to.path === '/' ? {} : { redirect: to.fullPath } })
+    next({
+      name: 'login',
+      query: to.path === '/' ? {} : { redirect: to.fullPath },
+    })
   }
 }
 

@@ -54,7 +54,10 @@ async function resetPasswordRequest(email, recaptchaToken) {
 
 async function resetPassword(id, password, recaptchaToken) {
   const url = await apiStore.href(apiStore.get(), 'resetPassword', { id: id })
-  return apiStore.patch(url, { password: password, recaptchaToken: recaptchaToken })
+  return apiStore.patch(url, {
+    password: password,
+    recaptchaToken: recaptchaToken,
+  })
 }
 
 function user() {

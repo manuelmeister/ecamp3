@@ -137,7 +137,9 @@ export default {
       })
     }
 
-    const url = await this.api.href(this.api.get(), 'resetPassword', { id: this.id })
+    const url = await this.api.href(this.api.get(), 'resetPassword', {
+      id: this.id,
+    })
     this.api.get(url)._meta.load.then(
       (info) => {
         this.email = info.email

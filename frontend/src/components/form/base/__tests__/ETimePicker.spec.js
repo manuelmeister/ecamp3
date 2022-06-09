@@ -169,7 +169,9 @@ describe('An ETimePicker', () => {
       clockHour.vm.valueOnMouseUp = 19
       await clockHour.trigger('mouseup')
       // select minute
-      const clockMinute = wrapper.findComponent({ name: 'v-time-picker-clock' })
+      const clockMinute = wrapper.findComponent({
+        name: 'v-time-picker-clock',
+      })
       clockMinute.vm.update(15)
       clockMinute.vm.valueOnMouseUp = 15
       await clockMinute.trigger('mouseup')

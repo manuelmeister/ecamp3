@@ -40,7 +40,10 @@ export default {
 
       this.camp.periods().items.forEach((p) => {
         const periodScheduleEntries = p.scheduleEntries().items.map((se) => ({
-          value: { activity: se.activity()._meta.self, scheduleEntry: se._meta.self },
+          value: {
+            activity: se.activity()._meta.self,
+            scheduleEntry: se._meta.self,
+          },
           text: '(' + se.number + ') ' + se.activity().title,
         }))
         scheduleEntries = [...scheduleEntries, ...periodScheduleEntries]

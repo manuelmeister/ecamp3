@@ -41,7 +41,11 @@ describe('An ESelect', () => {
           </div>
         `,
     })
-    return mountComponent(app, { vuetify, attachTo: document.body, ...options })
+    return mountComponent(app, {
+      vuetify,
+      attachTo: document.body,
+      ...options,
+    })
   }
 
   beforeEach(() => {

@@ -26,7 +26,8 @@ Displays all periods of a single camp and allows to edit them & create new ones
         <v-list-item-content class="pt-0 pb-2">
           <v-list-item-title>
             <v-chip dark :color="category.color">
-              (1.{{ category.numberingStyle }}) {{ category.short }}: {{ category.name }}
+              (1.{{ category.numberingStyle }}) {{ category.short }}:
+              {{ category.name }}
 
               <dialog-category-edit v-if="!disabled" :camp="camp()" :category="category">
                 <template #activator="{ on }">

@@ -260,7 +260,10 @@ export default {
           sortable: false,
           width: '15%',
         },
-        { text: this.$tc('entity.materialItem.fields.article'), value: 'article' },
+        {
+          text: this.$tc('entity.materialItem.fields.article'),
+          value: 'article',
+        },
       ]
 
       headers.push({

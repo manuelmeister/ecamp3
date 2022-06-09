@@ -39,7 +39,8 @@ Displays a single period as a list item including controls to edit and delete it
                 {{ $tc('components.camp.campPeriodsListItem.lastPeriodNotDeletable') }}
               </div>
               <div v-else>
-                {{ $tc('components.camp.campPeriodsListItem.deleteWarning') }} <br />
+                {{ $tc('components.camp.campPeriodsListItem.deleteWarning') }}
+                <br />
                 <ul>
                   <li>
                     {{ period.description }}
@@ -62,7 +63,12 @@ import ButtonDelete from '@/components/buttons/ButtonDelete.vue'
 
 export default {
   name: 'CampPeriods',
-  components: { DialogEntityDelete, DialogPeriodEdit, ButtonEdit, ButtonDelete },
+  components: {
+    DialogEntityDelete,
+    DialogPeriodEdit,
+    ButtonEdit,
+    ButtonDelete,
+  },
   props: {
     period: { type: Object, required: true },
     disabled: { type: Boolean, default: false },

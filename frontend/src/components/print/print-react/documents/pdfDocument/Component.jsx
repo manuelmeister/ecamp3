@@ -93,7 +93,11 @@ const registerFonts = async () => {
       { src: OpenSansSemiBold, fontWeight: 'semibold' },
       { src: OpenSansBold, fontWeight: 'bold' },
       { src: OpenSansItalic, fontStyle: 'italic' },
-      { src: OpenSansSemiBoldItalic, fontWeight: 'semibold', fontStyle: 'italic' },
+      {
+        src: OpenSansSemiBoldItalic,
+        fontWeight: 'semibold',
+        fontStyle: 'italic',
+      },
       { src: OpenSansBoldItalic, fontWeight: 'bold', fontStyle: 'italic' },
     ],
   })
