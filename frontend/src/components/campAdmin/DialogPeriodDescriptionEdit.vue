@@ -15,7 +15,7 @@
     <div>
       <e-text-field
         v-model="entityData.description"
-        :name="$tc('entity.period.fields.description')"
+        path="description"
         autofocus
         vee-rules="required"
       />

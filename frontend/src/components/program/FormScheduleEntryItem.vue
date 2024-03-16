@@ -15,7 +15,7 @@
 
         <e-time-picker
           v-model="localScheduleEntry.start"
-          :name="$tc('components.program.formScheduleEntryItem.start')"
+          path="startTime"
           vee-id="startDatetime"
           vee-rules="required"
           :filled="false"
@@ -30,7 +30,7 @@
         <e-date-picker
           v-model="localScheduleEntry.end"
           value-format="YYYY-MM-DDTHH:mm:ssZ"
-          :name="$tc('components.program.formScheduleEntryItem.end')"
+          path="endDate"
           vee-id="endDate"
           vee-rules="required|greaterThanOrEqual_date:@startDate"
           :min="localScheduleEntry.start"
@@ -42,7 +42,7 @@
 
         <e-time-picker
           v-model="localScheduleEntry.end"
-          :name="$tc('components.program.formScheduleEntryItem.end')"
+          path="endTime"
           vee-id="endDatetime"
           :vee-rules="endTimeValidation"
           :min="minEndTime"
