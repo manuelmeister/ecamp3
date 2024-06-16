@@ -218,7 +218,6 @@ jobs:
         working-directory: api
 
       - run: |
-          sudo apt-get install acl -y
           mkdir -p var/cache var/log
           jwt_passphrase=${JWT_PASSPHRASE:-$(grep ''^JWT_PASSPHRASE='' .env | cut -f 2 -d ''='')}
           echo "Generating public / private keys for JWT"
@@ -246,7 +245,21 @@ jobs:
           TEST_TOKEN: 2
         working-directory: api
 
-      - run: composer paratest
+      - run: |
+          php bin/console doctrine:database:create --no-interaction -e test
+          php bin/console doctrine:migrations:migrate --no-interaction -e test
+        env:
+          TEST_TOKEN: 3
+        working-directory: api
+
+      - run: |
+          php bin/console doctrine:database:create --no-interaction -e test
+          php bin/console doctrine:migrations:migrate --no-interaction -e test
+        env:
+          TEST_TOKEN: 4
+        working-directory: api
+
+      - run: composer paratest -- -p 4
         working-directory: api
         env:
           PERFORMANCE_TEST_DEBUG_OUTPUT: ${{ vars.PERFORMANCE_TEST_DEBUG_OUTPUT }}

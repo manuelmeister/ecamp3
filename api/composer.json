@@ -117,7 +117,7 @@
         ],
         "paratest": [
             "Composer\\Config::disableProcessTimeout",
-            "vendor/bin/paratest -p 2 --passthru-php=\"-d memory_limit=-1\""
+            "vendor/bin/paratest --passthru-php=\"-d memory_limit=-1\""
         ],
         "update-snapshots": [
             "Composer\\Config::disableProcessTimeout",
