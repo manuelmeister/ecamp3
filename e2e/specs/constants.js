@@ -1,4 +1,4 @@
-export const cachedEndpoint = Cypress.env('API_ROOT_URL_CACHED')
+export const cachedEndpoint = process.env.API_ROOT_URL_CACHED || 'http://localhost:3004'
 
 export const grgrCampId = '3c79b99ab424'
 export const loremIpsumCampId = '9c2447aefe38'

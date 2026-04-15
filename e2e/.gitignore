@@ -24,3 +24,6 @@ yarn-error.log*
 # yalc
 .yalc
 yalc.lock
+
+playwright-report/
+test-results/

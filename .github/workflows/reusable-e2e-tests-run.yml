@@ -66,14 +66,14 @@ jobs:
       # start necessary containers
       - run: docker compose -f docker-compose.yml up -d api frontend pdf print browserless database docker-host http-cache http-cache-logs mail pg-admin reverse-proxy
 
-      # pull cypress while container are starting up
+      # pull playwright while container are starting up
       - run: docker compose pull e2e
         
       - run: docker compose run --entrypoint="npm ci" --rm e2e
 
       - run: sh -x wait-for-container-startup.sh
 
-      - run: docker compose --profile e2e run --rm e2e --browser ${{ matrix.browser }}
+      - run: docker compose --profile e2e run --rm e2e npx playwright test --project ${{ matrix.browser }}
 
       - run: sudo chown -R $USER e2e
         if: always()
@@ -82,9 +82,10 @@ jobs:
       - uses: actions/upload-artifact@v7
         if: always()
         with:
-          name: cypress-output-${{ matrix.browser }}${{ inputs.run-identifier != null && format('-{0}', inputs.run-identifier) }}
+          name: playwright-report-${{ matrix.browser }}${{ inputs.run-identifier != null && format('-{0}', inputs.run-identifier) }}
           path: |
-            e2e/data/**/*
+            e2e/playwright-report/**/*
+            e2e/test-results/**/*
 
       # print running containers
       - run: docker ps -a
