@@ -1,4 +1,4 @@
-import cypressEslint from 'eslint-plugin-cypress'
+import playwrightEslint from 'eslint-plugin-playwright'
 import { includeIgnoreFile } from '@eslint/compat'
 import globals from 'globals'
 import path from 'node:path'
@@ -13,7 +13,7 @@ const gitignorePath = path.resolve(__dirname, '.gitignore')
 
 export default [
   js.configs.recommended,
-  cypressEslint.configs.recommended,
+  playwrightEslint.configs['flat/recommended'],
   prettierRecommended,
   {
     ignores: ['data/'],

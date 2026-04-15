@@ -18,9 +18,9 @@ jobs:
       fail-fast: false
       matrix:
         browser:
-          - chrome
+          - chromium
           - firefox
-          - edge
+          - webkit
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
@@ -66,25 +66,27 @@ jobs:
       # start necessary containers
       - run: docker compose -f docker-compose.yml up -d api frontend pdf print browserless database docker-host http-cache http-cache-logs mail pg-admin reverse-proxy
 
-      # pull cypress while container are starting up
+      # pull playwright while container are starting up
       - run: docker compose pull e2e
         
       - run: docker compose run --entrypoint="npm ci" --rm e2e
 
       - run: sh -x wait-for-container-startup.sh
 
-      - run: docker compose --profile e2e run --rm e2e --browser ${{ matrix.browser }}
+      - run: docker compose --profile e2e run --entrypoint="npx playwright test --project=${{ matrix.browser }}" --rm e2e
 
       - run: sudo chown -R $USER e2e
         if: always()
 
-      # store screenshots and videos on GitHub as artifacts, for downloading and debugging in case of problems
+      # store reports and downloads on GitHub as artifacts
       - uses: actions/upload-artifact@v7
         if: always()
         with:
-          name: cypress-output-${{ matrix.browser }}${{ inputs.run-identifier != null && format('-{0}', inputs.run-identifier) }}
+          name: playwright-output-${{ matrix.browser }}${{ inputs.run-identifier != null && format('-{0}', inputs.run-identifier) }}
           path: |
-            e2e/data/**/*
+            e2e/playwright-report/
+            e2e/test-results/
+            e2e/data/downloads/
 
       # print running containers
       - run: docker ps -a
