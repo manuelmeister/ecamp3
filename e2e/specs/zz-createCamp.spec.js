@@ -10,11 +10,11 @@ in2Days.setDate(in2Days.getDate() + 2)
 const campTitle = 'title'
 
 test.describe('create new camp', () => {
-  test('without prototype', async ({ page, browserName }) => {
+  test('without prototype', async ({ page, browserName }, testInfo) => {
     if (browserName === 'webkit') {
       test.skip()
     }
-    if (browserName === 'chromium' && test.info().project.name === 'edge') {
+    if (browserName === 'chromium' && testInfo.project.name === 'edge') {
       console.log('edge has problems since the update to vue3.')
       test.skip()
     }

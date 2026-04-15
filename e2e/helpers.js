@@ -47,11 +47,11 @@ export async function waitForCacheMiss(request, uri, timeout = 10000) {
 }
 
 export async function apiGet(request, uri) {
-  return await request.get(`${API_ROOT_URL_CACHED}${uri}.jsonhal`)
+  return await request.get(`${API_ROOT_URL_CACHED}${uri}`)
 }
 
 export async function apiPatch(request, uri, body) {
-  return await request.patch(`${API_ROOT_URL_CACHED}${uri}.jsonhal`, {
+  return await request.patch(`${API_ROOT_URL_CACHED}${uri}`, {
     data: body,
     headers: {
       'Content-Type': 'application/merge-patch+json',
@@ -60,7 +60,7 @@ export async function apiPatch(request, uri, body) {
 }
 
 export async function apiPost(request, uri, body) {
-  return await request.post(`${API_ROOT_URL_CACHED}${uri}.jsonhal`, {
+  return await request.post(`${API_ROOT_URL_CACHED}${uri}`, {
     data: body,
     headers: {
       'Content-Type': 'application/hal+json',
@@ -69,5 +69,5 @@ export async function apiPost(request, uri, body) {
 }
 
 export async function apiDelete(request, uri) {
-  return await request.delete(`${API_ROOT_URL_CACHED}${uri}.jsonhal`)
+  return await request.delete(`${API_ROOT_URL_CACHED}${uri}`)
 }

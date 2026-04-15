@@ -68,7 +68,10 @@ test.describe.skip('The filters in the dashboard', () => {
       page.locator('span.v-chip:has-text("Kategorie: ES oder LS")')
     ).toBeVisible()
 
-    await page.locator('span.v-chip:has-text("Kategorie: ES oder LS")').click()
+    await page
+      .locator('span.v-chip:has-text("Kategorie: ES oder LS")')
+      .locator('.v-chip__close')
+      .click()
 
     await clickOnItemWithLabel(page, 'Essen')
     await clickOnItemWithLabel(page, 'Lagersport')
