@@ -1,8 +1,8 @@
-const fs = require('fs')
-const path = require('path')
-const pdfjsLib = require('pdfjs-dist/legacy/build/pdf.mjs')
+import fs from 'fs'
+import path from 'path'
+import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs'
 
-function moveDownloads(testInfo, downloadsFolder) {
+export function moveDownloads(testInfo, downloadsFolder) {
   if (!downloadsFolder) downloadsFolder = 'data/downloads'
   const destSubDir = testInfo.title.replace(/[/\\?%*:|"<>]/g, '-')
   const destDirName = path.join(downloadsFolder, destSubDir)
@@ -20,7 +20,7 @@ function moveDownloads(testInfo, downloadsFolder) {
   })
 }
 
-function deleteDownloads(downloadsFolder) {
+export function deleteDownloads(downloadsFolder) {
   if (!downloadsFolder) downloadsFolder = 'data/downloads'
   if (!fs.existsSync(downloadsFolder)) return
   const files = fs.readdirSync(downloadsFolder, { withFileTypes: true })
@@ -35,17 +35,11 @@ function deleteDownloads(downloadsFolder) {
   })
 }
 
-async function getPdfProperties(filePath) {
+export async function getPdfProperties(filePath) {
   const data = new Uint8Array(fs.readFileSync(filePath))
   const loadDocument = pdfjsLib.getDocument({ data: data })
   const pdfDocument = await loadDocument.promise
   return {
     numPages: pdfDocument.numPages,
   }
-}
-
-module.exports = {
-  moveDownloads,
-  deleteDownloads,
-  getPdfProperties,
 }

@@ -1,5 +1,5 @@
-const { test, expect } = require('@playwright/test')
-const { loginAndSetCookie } = require('../utils/helpers')
+import { test, expect } from '@playwright/test'
+import { loginAndSetCookie } from '../utils/helpers.js'
 
 test.describe.skip('The filters in the dashboard', () => {
   test.beforeEach(async ({ page, request }) => {

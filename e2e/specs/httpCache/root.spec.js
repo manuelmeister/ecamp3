@@ -1,9 +1,9 @@
-const { test } = require('@playwright/test')
-const {
+import { test } from '@playwright/test'
+import {
   loginAndSetCookie,
   expectCacheHit,
   expectCacheMiss,
-} = require('../../utils/helpers')
+} from './../../utils/helpers.js'
 
 const user1 = 'test@example.com'
 const user2 = 'castor@example.com'

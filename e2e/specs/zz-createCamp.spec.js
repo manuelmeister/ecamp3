@@ -1,6 +1,6 @@
-const { test, expect } = require('@playwright/test')
-const { bipiUser } = require('./constants')
-const { loginAndSetCookie } = require('../utils/helpers')
+import { test, expect } from '@playwright/test'
+import { bipiUser } from './constants.js'
+import { loginAndSetCookie } from '../utils/helpers.js'
 
 const tomorrow = new Date()
 tomorrow.setDate(tomorrow.getDate() + 1)

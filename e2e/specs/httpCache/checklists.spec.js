@@ -1,11 +1,6 @@
-const { test, expect } = require('@playwright/test')
-const {
-  bipiUser,
-  cachedEndpoint,
-  castorUser,
-  basiskursCampId,
-} = require('../../constants')
-const {
+import { test, expect } from '@playwright/test'
+import { bipiUser, cachedEndpoint, castorUser, basiskursCampId } from './../constants.js'
+import {
   loginAndSetCookie,
   expectCacheHit,
   expectCacheMiss,
@@ -13,8 +8,11 @@ const {
   apiPatch,
   apiPost,
   apiDelete,
-} = require('../../../utils/helpers')
-const collectionResponse = require('./responses/checklists_collection.json')
+} from './../../utils/helpers.js'
+import { readFileSync } from 'fs'
+const collectionResponse = JSON.parse(
+  readFileSync(new URL('./responses/checklists_collection.json', import.meta.url))
+)
 
 const collectionXKeys =
   '146c0608237f ebbd0c61eb85 ebbd0c61eb85#camp /api/camps/5d28f99890bc/checklists'

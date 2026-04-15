@@ -1,8 +1,8 @@
-const { test, expect } = require('@playwright/test')
-const path = require('path')
-const fs = require('fs')
-const { loginAndSetCookie } = require('../utils/helpers')
-const { deleteDownloads, moveDownloads, getPdfProperties } = require('../utils/tasks')
+import { test, expect } from '@playwright/test'
+import path from 'path'
+import fs from 'fs'
+import { loginAndSetCookie } from '../utils/helpers.js'
+import { deleteDownloads, moveDownloads, getPdfProperties } from '../utils/tasks.js'
 
 test.describe('Client print test', () => {
   const downloadsFolder = 'data/downloads'

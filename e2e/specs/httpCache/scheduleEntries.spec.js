@@ -1,5 +1,5 @@
-const { test, expect } = require('@playwright/test')
-const {
+import { test, expect } from '@playwright/test'
+import {
   bipiUser,
   bruceWayneUser,
   cachedEndpoint,
@@ -8,8 +8,8 @@ const {
   grgrPeriodId,
   harryMainPeriodId,
   harrySecondPeriodId,
-} = require('../../constants')
-const {
+} from './../constants.js'
+import {
   loginAndSetCookie,
   expectCacheHit,
   expectCacheMiss,
@@ -17,8 +17,11 @@ const {
   apiPatch,
   apiPost,
   apiDelete,
-} = require('../../../utils/helpers')
-const collectionResponse = require('./responses/schedule_entries_collection.json')
+} from './../../utils/helpers.js'
+import { readFileSync } from 'fs'
+const collectionResponse = JSON.parse(
+  readFileSync(new URL('./responses/schedule_entries_collection.json', import.meta.url))
+)
 
 const collectionXKeys =
   '10d8f02ce5b4 ' +

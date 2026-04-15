@@ -1,9 +1,10 @@
-const { expect } = require('@playwright/test')
+import { expect } from '@playwright/test'
 
-const API_ROOT_URL = process.env.API_ROOT_URL || 'http://localhost:3000/api'
-const API_ROOT_URL_CACHED = process.env.API_ROOT_URL_CACHED || 'http://localhost:3004'
+export const API_ROOT_URL = process.env.API_ROOT_URL || 'http://localhost:3000/api'
+export const API_ROOT_URL_CACHED =
+  process.env.API_ROOT_URL_CACHED || 'http://localhost:3004'
 
-async function login(request, identifier, password = 'test') {
+export async function login(request, identifier, password = 'test') {
   const response = await request.post(`${API_ROOT_URL}/authentication_token`, {
     data: { identifier, password },
   })
@@ -13,7 +14,7 @@ async function login(request, identifier, password = 'test') {
   return token
 }
 
-async function loginAndSetCookie(page, request, identifier, password = 'test') {
+export async function loginAndSetCookie(page, request, identifier, password = 'test') {
   const token = await login(request, identifier, password)
   // In the Vue frontend, auth might be stored in localStorage or handled via cookies.
   // We'll navigate to the root to initialize the domain, then inject localStorage.
@@ -26,24 +27,24 @@ async function loginAndSetCookie(page, request, identifier, password = 'test') {
   await page.reload()
 }
 
-async function expectCacheHeader(request, uri, expectedHeader) {
+export async function expectCacheHeader(request, uri, expectedHeader) {
   const response = await request.get(`${API_ROOT_URL_CACHED}${uri}.jsonhal`)
   expect(response.headers()['x-cache']).toBe(expectedHeader)
 }
 
-async function expectCacheHit(request, uri) {
+export async function expectCacheHit(request, uri) {
   await expectCacheHeader(request, uri, 'HIT')
 }
 
-async function expectCacheMiss(request, uri) {
+export async function expectCacheMiss(request, uri) {
   await expectCacheHeader(request, uri, 'MISS')
 }
 
-async function expectCachePass(request, uri) {
+export async function expectCachePass(request, uri) {
   await expectCacheHeader(request, uri, 'PASS')
 }
 
-async function waitForCacheMiss(request, uri) {
+export async function waitForCacheMiss(request, uri) {
   await expect
     .poll(
       async () => {
@@ -55,11 +56,11 @@ async function waitForCacheMiss(request, uri) {
     .toBe('MISS')
 }
 
-async function apiGet(request, uri) {
+export async function apiGet(request, uri) {
   return await request.get(`${API_ROOT_URL_CACHED}${uri}.jsonhal`)
 }
 
-async function apiPatch(request, uri, data) {
+export async function apiPatch(request, uri, data) {
   return await request.patch(`${API_ROOT_URL_CACHED}${uri}.jsonhal`, {
     data,
     headers: {
@@ -68,7 +69,7 @@ async function apiPatch(request, uri, data) {
   })
 }
 
-async function apiPost(request, uri, data) {
+export async function apiPost(request, uri, data) {
   return await request.post(`${API_ROOT_URL_CACHED}${uri}.jsonhal`, {
     data,
     headers: {
@@ -77,21 +78,6 @@ async function apiPost(request, uri, data) {
   })
 }
 
-async function apiDelete(request, uri) {
+export async function apiDelete(request, uri) {
   return await request.delete(`${API_ROOT_URL_CACHED}${uri}.jsonhal`)
-}
-
-module.exports = {
-  login,
-  loginAndSetCookie,
-  expectCacheHit,
-  expectCacheMiss,
-  expectCachePass,
-  waitForCacheMiss,
-  apiGet,
-  apiPatch,
-  apiPost,
-  apiDelete,
-  API_ROOT_URL,
-  API_ROOT_URL_CACHED,
 }

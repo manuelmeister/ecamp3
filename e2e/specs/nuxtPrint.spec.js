@@ -1,8 +1,8 @@
-const { test, expect } = require('@playwright/test')
-const path = require('path')
-const { loginAndSetCookie, apiGet } = require('../utils/helpers')
-const { deleteDownloads, moveDownloads, getPdfProperties } = require('../utils/tasks')
-const fs = require('fs')
+import { test, expect } from '@playwright/test'
+import path from 'path'
+import { loginAndSetCookie, apiGet } from '../utils/helpers.js'
+import { deleteDownloads, moveDownloads, getPdfProperties } from '../utils/tasks.js'
+import fs from 'fs'
 
 test.describe('Nuxt print test', () => {
   test('shows print preview', async ({ page, request }) => {

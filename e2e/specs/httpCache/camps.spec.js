@@ -1,5 +1,5 @@
-const { test } = require('@playwright/test')
-const { loginAndSetCookie, expectCachePass } = require('../../utils/helpers')
+import { test } from '@playwright/test'
+import { loginAndSetCookie, expectCachePass } from './../../utils/helpers.js'
 
 test("doesn't cache /camps", async ({ page, request }) => {
   const uri = '/api/camps'

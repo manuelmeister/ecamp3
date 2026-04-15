@@ -1,12 +1,17 @@
-const { test, expect } = require('@playwright/test')
-const { bipiUser, cachedEndpoint, castorUser } = require('../../constants')
-const {
+import { test, expect } from '@playwright/test'
+import { bipiUser, cachedEndpoint, castorUser } from './../constants.js'
+import {
   loginAndSetCookie,
   expectCacheHit,
   expectCacheMiss,
-} = require('../../../utils/helpers')
-const collectionResponse = require('./responses/content_types_collection.json')
-const itemResponse = require('./responses/content_types_entity.json')
+} from './../../utils/helpers.js'
+import { readFileSync } from 'fs'
+const collectionResponse = JSON.parse(
+  readFileSync(new URL('./responses/content_types_collection.json', import.meta.url))
+)
+const itemResponse = JSON.parse(
+  readFileSync(new URL('./responses/content_types_entity.json', import.meta.url))
+)
 
 const collectionXKeys =
   'a4211c11211c f17470519474 1a0f84e322c8 c462edd869f3 5e2028c55ee4 3ef17bd1df72 4f0c657fecef a4211c112939 44dcc7493c65 cfccaecd4bad 318e064ea0c9 /api/content_types'
