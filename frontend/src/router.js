@@ -827,7 +827,7 @@ export function materialListRoute(camp, materialListOrRoute = '/all', query = {}
       query,
     }
   }
-  if (!materialListOrRoute?._meta || materialListOrRoute.meta?.loading) return {}
+  if (!materialListOrRoute?._meta || materialListOrRoute._meta?.loading) return {}
   return {
     name: 'camp/material/detail',
     params: {
