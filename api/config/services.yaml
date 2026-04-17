@@ -175,6 +175,12 @@ services:
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
 
+    App\EventListener\RefreshTokenValidityCookieListener:
+        arguments:
+            - '%env(COOKIE_PREFIX)%'
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 20 }
+
     App\HttpCache\PurgeHttpCacheListener:
         arguments:
             - '@api_platform.iri_converter'
