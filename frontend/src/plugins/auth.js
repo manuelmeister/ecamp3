@@ -15,7 +15,7 @@ axios.interceptors.response.use(null, (error) => {
 let scheduledRefresh = null
 
 export async function initRefresh({ navigateOnSuccess = true } = {}) {
-  // Cookies.get was not reliable to detect if the cookie was present.
+  // Keep explicit logout behavior so a local logout does not immediately re-authenticate.
   if (hasLoggedOutFromLocalStorage()) {
     return
   }
@@ -25,6 +25,9 @@ export async function initRefresh({ navigateOnSuccess = true } = {}) {
   }
   let refreshedSuccessfully = false
   if (!isLoggedIn()) {
+    if (!hasValidRefreshToken()) {
+      return
+    }
     try {
       await refresh()
     } catch {
@@ -195,6 +198,7 @@ export async function logout() {
     clearTimeout(scheduledRefresh)
   }
   Cookies.remove(headerAndPayloadCookieName())
+  Cookies.remove(refreshTokenValidityCookieName())
   store.commit('logout')
   return router
     .push({ name: 'login' })
@@ -205,6 +209,24 @@ export async function logout() {
 
 function headerAndPayloadCookieName() {
   return `${cookiePrefix()}jwt_hp`
+}
+
+function refreshTokenValidityCookieName() {
+  return `${cookiePrefix()}refresh_token_validity`
+}
+
+function hasValidRefreshToken() {
+  const refreshTokenValidity = Cookies.get(refreshTokenValidityCookieName())
+  if (!refreshTokenValidity) {
+    return false
+  }
+
+  const validityTimestamp = Number.parseInt(refreshTokenValidity, 10)
+  if (Number.isNaN(validityTimestamp)) {
+    return true
+  }
+
+  return Date.now() < validityTimestamp * 1000
 }
 
 function cookiePrefix() {
