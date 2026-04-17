@@ -58,9 +58,8 @@ app.directive('click-outside', ClickOutside)
 app.directive('resize', Resize)
 app.directive('resizeobserver', ResizeObserver.directive)
 
-app.mount('#app')
+await initRefresh()
 
-// noinspection JSIgnoredPromiseFromCall
-initRefresh()
+app.mount('#app')
 
 export default app
