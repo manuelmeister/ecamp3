@@ -580,7 +580,8 @@ async function requireAuth(to, from, next) {
     await initRefresh({ navigateOnSuccess: false })
   }
 
-  if (isLoggedIn()) {
+  const loggedIn = isLoggedIn()
+  if (loggedIn) {
     next()
   } else {
     next({ name: 'login', query: to.path === '/' ? {} : { redirect: to.fullPath } })
