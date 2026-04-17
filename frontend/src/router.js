@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { slugify } from '@/plugins/slugify.js'
-import { isAdmin, isLoggedIn } from '@/plugins/auth'
+import { initRefresh, isAdmin, isLoggedIn } from '@/plugins/auth'
 import { apiStore } from '@/plugins/store'
 import { campShortTitle } from '@/common/helpers/campShortTitle'
 import { getEnv } from '@/environment.js'
@@ -575,7 +575,11 @@ function all(guards) {
   return (to, from, next) => evaluateGuards(guards, to, from, next)
 }
 
-function requireAuth(to, from, next) {
+async function requireAuth(to, from, next) {
+  if (!isLoggedIn()) {
+    await initRefresh({ navigateOnSuccess: false })
+  }
+
   if (isLoggedIn()) {
     next()
   } else {

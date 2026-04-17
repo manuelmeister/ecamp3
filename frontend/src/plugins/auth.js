@@ -14,7 +14,7 @@ axios.interceptors.response.use(null, (error) => {
 
 let scheduledRefresh = null
 
-export async function initRefresh() {
+export async function initRefresh({ navigateOnSuccess = true } = {}) {
   // Cookies.get was not reliable to detect if the cookie was present.
   if (hasLoggedOutFromLocalStorage()) {
     return
@@ -36,7 +36,7 @@ export async function initRefresh() {
     refreshedSuccessfully = true
   }
   rescheduleRefresh()
-  if (refreshedSuccessfully) {
+  if (refreshedSuccessfully && navigateOnSuccess) {
     await router.replace(originalTarget)
   }
 }
