@@ -101,9 +101,9 @@ class GoogleAuthenticator extends OAuth2Authenticator {
 
         $response = new RedirectResponse($redirectUrl);
 
-        /** @var string[] $cookies */
-        $cookies = $authSuccess->headers->all('set-cookie');
-        $response->headers->set('set-cookie', $cookies);
+        foreach ($authSuccess->headers->getCookies() as $cookie) {
+            $response->headers->setCookie($cookie);
+        }
 
         return $response;
     }
