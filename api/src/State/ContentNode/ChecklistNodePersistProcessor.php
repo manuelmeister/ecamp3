@@ -27,9 +27,7 @@ class ChecklistNodePersistProcessor extends ContentNodePersistProcessor {
         $checklistItems = [];
         if (!empty($allIds)) {
             $fetchedItems = $this->checklistItemRepository->findBy(['id' => $allIds]);
-            foreach ($fetchedItems as $item) {
-                $checklistItems[$item->getId()] = $item;
-            }
+            $checklistItems = array_column($fetchedItems, null, 'id');
         }
 
         if (null !== $data->addChecklistItemIds) {
