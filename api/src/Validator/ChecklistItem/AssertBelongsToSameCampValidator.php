@@ -42,9 +42,17 @@ class AssertBelongsToSameCampValidator extends ConstraintValidator {
 
         $camp = $this->getCampFromInterface($object, $this->em);
 
+        $checklistItems = [];
+        if (!empty($value)) {
+            $fetchedItems = $this->checklistItemRepository->findBy(['id' => $value]);
+            foreach ($fetchedItems as $item) {
+                $checklistItems[$item->getId()] = $item;
+            }
+        }
+
         foreach ($value as $checklistItemId) {
             /** @var ?ChecklistItem $checklistItem */
-            $checklistItem = $this->checklistItemRepository->find($checklistItemId);
+            $checklistItem = $checklistItems[$checklistItemId] ?? null;
 
             if ($camp != $checklistItem?->getCamp()) {
                 $this->context->buildViolation($constraint->message)
