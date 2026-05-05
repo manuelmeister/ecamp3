@@ -710,6 +710,13 @@ class Camp extends BaseEntity implements BelongsToCampInterface, CopyFromPrototy
         return $this;
     }
 
+    #[ApiProperty(readable: true, writable: false)]
+    #[Groups(['read'])]
+    #[SerializedName('isCourse')]
+    public function getIsCourse(): bool {
+        return $this->checklists->count() > 0;
+    }
+
     /**
      * @return Checklist[]
      */
