@@ -35,7 +35,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             security: 'is_authenticated()'
         ),
     ],
-    normalizationContext: ['groups' => ['read']],
+    normalizationContext: ['groups' => ['Profile:read', 'read']],
     denormalizationContext: ['groups' => ['write']],
 )]
 #[ApiFilter(filterClass: SearchFilter::class, properties: ['user.collaborations.camp', 'user'])]
@@ -56,7 +56,7 @@ class Profile extends BaseEntity {
     #[Assert\NotBlank]
     #[Assert\Email]
     #[ApiProperty(example: self::EXAMPLE_EMAIL)]
-    #[Groups(['read', 'create'])]
+    #[Groups(['Profile:read', 'create'])]
     #[ORM\Column(type: 'string', length: 64, unique: true, nullable: false)]
     public ?string $email = null;
 
@@ -137,7 +137,7 @@ class Profile extends BaseEntity {
     #[InputFilter\CleanText]
     #[Assert\Length(max: 64)]
     #[ApiProperty(example: self::EXAMPLE_FIRSTNAME)]
-    #[Groups(['read', 'write'])]
+    #[Groups(['Profile:read', 'write'])]
     #[ORM\Column(type: 'text', nullable: true)]
     public ?string $firstname = null;
 
@@ -148,7 +148,7 @@ class Profile extends BaseEntity {
     #[InputFilter\CleanText]
     #[Assert\Length(max: 64)]
     #[ApiProperty(example: self::EXAMPLE_SURNAME)]
-    #[Groups(['read', 'write'])]
+    #[Groups(['Profile:read', 'write'])]
     #[ORM\Column(type: 'text', nullable: true)]
     public ?string $surname = null;
 
@@ -159,7 +159,7 @@ class Profile extends BaseEntity {
     #[InputFilter\CleanText]
     #[Assert\Length(max: 32)]
     #[ApiProperty(example: self::EXAMPLE_NICKNAME)]
-    #[Groups(['read', 'write'])]
+    #[Groups(['Profile:read', 'write'])]
     #[ORM\Column(type: 'text', nullable: true)]
     public ?string $nickname = null;
 
@@ -169,7 +169,7 @@ class Profile extends BaseEntity {
     #[InputFilter\Trim]
     #[ApiProperty(example: self::EXAMPLE_LANGUAGE)]
     #[Assert\Choice(choices: Languages::SUPPORTED_LANGUAGES)]
-    #[Groups(['read', 'write'])]
+    #[Groups(['Profile:read', 'write'])]
     #[ORM\Column(type: 'string', length: 20, nullable: true)]
     public ?string $language = null;
 
@@ -179,7 +179,7 @@ class Profile extends BaseEntity {
     #[InputFilter\Trim]
     #[Assert\Regex(pattern: '/^#[0-9a-zA-Z]{6}$/')]
     #[ApiProperty(example: '#4DBB52')]
-    #[Groups(['read', 'write'])]
+    #[Groups(['Profile:read', 'write'])]
     #[ORM\Column(type: 'string', length: 8, nullable: true)]
     public ?string $color = null;
 
@@ -189,7 +189,7 @@ class Profile extends BaseEntity {
     #[InputFilter\Trim]
     #[Assert\Length(max: 2, countUnit: Assert\Length::COUNT_GRAPHEMES)]
     #[ApiProperty(example: 'AB')]
-    #[Groups(['read', 'write'])]
+    #[Groups(['Profile:read', 'write'])]
     #[ORM\Column(type: 'text', nullable: true)]
     public ?string $abbreviation = null;
 
@@ -201,7 +201,7 @@ class Profile extends BaseEntity {
     public array $roles = ['ROLE_USER'];
 
     #[ApiProperty(writable: false, readableLink: true, example: '/users/1a2b3c4d')]
-    #[Groups(['read'])]
+    #[Groups(['Profile:read'])]
     #[ORM\OneToOne(targetEntity: User::class, mappedBy: 'profile')]
     public User $user;
 
@@ -225,7 +225,7 @@ class Profile extends BaseEntity {
      * documents. Falls back to the nickname if not complete.
      */
     #[ApiProperty(example: 'Robert Baden-Powell')]
-    #[Groups(['read'])]
+    #[Groups(['Profile:read'])]
     public function getLegalName(): ?string {
         if (!empty($this->firstname) && !empty($this->surname)) {
             return $this->firstname.' '.$this->surname;

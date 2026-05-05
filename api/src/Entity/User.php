@@ -49,7 +49,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             security: 'false'
         ),
         new Post(
-            normalizationContext: ['groups' => ['read', 'User:create']],
+            normalizationContext: ['groups' => ['User:read', 'read', 'User:create']],
             denormalizationContext: ['groups' => ['write', 'create']],
             security: 'true',
             // allow unauthenticated clients to create (register) users
@@ -57,7 +57,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             processor: UserCreateProcessor::class
         ),
     ],
-    normalizationContext: ['groups' => ['read']],
+    normalizationContext: ['groups' => ['User:read', 'read']],
     denormalizationContext: ['groups' => ['write']],
 )]
 #[UniqueEntity(
@@ -195,7 +195,7 @@ class User extends BaseEntity implements UserInterface, PasswordAuthenticatedUse
      * A displayable name of the user.
      */
     #[ApiProperty(example: 'Robert Baden-Powell')]
-    #[Groups(['read'])]
+    #[Groups(['User:read', 'Profile:read'])]
     public function getDisplayName(): ?string {
         return $this->profile->getDisplayName();
     }
@@ -204,7 +204,7 @@ class User extends BaseEntity implements UserInterface, PasswordAuthenticatedUse
      * A displayable name of the user.
      */
     #[ApiProperty(example: '#ff0000')]
-    #[Groups(['read'])]
+    #[Groups(['User:read', 'Profile:read'])]
     public function getColor(): ?string {
         return $this->profile->color;
     }
@@ -213,14 +213,14 @@ class User extends BaseEntity implements UserInterface, PasswordAuthenticatedUse
      * A displayable name of the user.
      */
     #[ApiProperty(example: 'AB')]
-    #[Groups(['read'])]
+    #[Groups(['User:read', 'Profile:read'])]
     public function getAbbreviation(): ?string {
         return $this->profile->abbreviation;
     }
 
     #[ApiProperty]
     #[SerializedName('profile')]
-    #[Groups(['read'])]
+    #[Groups(['User:read'])]
     public function getProfile(): Profile {
         return $this->profile;
     }
